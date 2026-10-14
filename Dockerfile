@@ -1,8 +1,11 @@
-FROM php:8.4-cli-alpine
+FROM php:8.4-cli
 
 WORKDIR /app
 
-RUN docker-php-ext-install sockets
+RUN apt-get update && apt-get install -y \
+    libaio-dev \
+    && docker-php-ext-install sockets \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY . .
 
